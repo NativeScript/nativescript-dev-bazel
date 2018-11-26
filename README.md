@@ -8,7 +8,7 @@ Plugin that allows you to build [NativeScript](https://www.nativescript.org/) ap
 You can add the plugin to your existing NativeScript applications by executing:
 
 ```
-npm i --save-dev <url>/tarball/master
+npm i --save-dev https://github.com/rosen-vladimirov/nativescript-dev-bazel/tarball/master
 ```
 
 After that you have to prepare the project with:

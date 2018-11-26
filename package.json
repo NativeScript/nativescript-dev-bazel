@@ -1,0 +1,35 @@
+{
+  "name": "nativescript-dev-bazel",
+  "version": "0.1.0",
+  "description": "Plugin to add Bazel specific files to NativeScript project",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node postinstall.js",
+    "preuninstall": "node preuninstall.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "NativeScript",
+    "Bazel"
+  ],
+  "author": "Rosen Vladimirov",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "nativescript-hook": "0.2.4"
+  },
+  "nativescript": {
+    "hooks": [
+      {
+        "type": "after-prepare",
+        "script": "after-prepare.js",
+        "inject": true
+      }
+    ],
+    "tns-ios": {
+      "version": "3.0.0"
+    },
+    "tns-android": {
+      "version": "3.0.0"
+    }
+  }
+}

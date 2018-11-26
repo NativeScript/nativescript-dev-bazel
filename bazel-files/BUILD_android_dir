@@ -18,7 +18,16 @@ sh_binary(
     srcs = ["mdg.sh"],
 )
 
-# assets are the contents of app dir and the contents of node_modules
+# assets are the contents of `app` or `src` dir and the contents of node_modules
+# TODO: Instead of using files already prepared by NativeScript CLI, we should prepare them here
+# NativeScript CLI prepares the files in the following way:
+# 1. All files inside `<project dir>/app` or `<project dir>/src` are copied to the `<project dir>/platforms/android/app/src/main/assets/app`
+# 2. Each file in this dir that has `<name>.android.<extension>` is renamed to `<name>.<extension>`.
+# 3. Each file in this dir that has `<name>.ios.<extension>` is removed.
+# 4. All dependencies of the project (everything defined in the dependencies section of the `<project dir>/package.json`) and all of their dependencies and the dependencies of their dependencies,
+# i.e. the production dependencies of the project are copied to `<project dir>/platforms/android/app/src/main/assets/app/tns_modules` directory.
+# 5. All files in `tns_modules` are checked and if each of them that is called `<name>.android.<extension>` is renamed to `<name>.<extension>`. Each of them called `<name>.ios.<extension>` is removed.
+# 6. For each of the NativeScript plugins (i.e. dependency of the project that has "nativescript" key in the package.json), the `<project dir>/platforms/android/app/src/main/assets/app/tns_modules/<plugin name>/platforms` dir is removed.
 ASSETS = glob([
         "app/src/main/assets/**",
     ],

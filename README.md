@@ -45,6 +45,7 @@ bazel mobile-install //platforms/android:android --fat_apk_cpu=x86
 
 ## Contribution
 You are more than welcome to contribute to this project. Just clone the repo and you are ready to start.
+You can search for `# TODO` in the code for the places where we've identified something needs to be implemented/fixed.
 
 ## License
 

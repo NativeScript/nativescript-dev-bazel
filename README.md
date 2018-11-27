@@ -21,6 +21,11 @@ And now you can build it with:
 bazel build //platforms/android:android
 ```
 
+> NOTE: You need Android NDK to be installed in order to make the bazel build work. You can install it by executing:
+```
+echo y | $ANDROID_HOME/tools/bin/sdkmanager "ndk-bundle"
+```
+
 ## Limitations
 * Currently you can build NativeScript applications for Android only.
 * In case you are using some plugins that require maven libraries, you may have to add some additional `gmaven` artifacts in the `<project dir>/platforms/android/BUILD.bazel` file.

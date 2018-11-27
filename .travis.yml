@@ -1,0 +1,49 @@
+matrix:
+  include:
+    - os: linux
+      language: android
+      env:
+        - TestVersion="latest"
+      jdk: oraclejdk8
+      before_install:
+        - nvm install 8
+      before_script:
+        - echo no | android create avd --force -n test -t android-21 -b armeabi-v7a
+        - emulator -avd test -no-audio -no-window &
+        - android-wait-for-emulator
+      script:
+        - npm pack
+        - mkdir test-app
+        - cd test-app
+        - tns create app1 --ng
+        - cd app1
+        - npm i --save-dev ../../*.tgz
+        - tns prepare android
+        - bazel mobile-install //platforms/android:android
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-28.0.3
+    - android-28
+    - android-21
+    - extra-android-m2repository
+    - sys-img-armeabi-v7a-android-21
+
+before_install:
+  - sudo pip install --upgrade pip
+  - sudo pip install six
+
+
+install:
+    - npm install -g nativescript --ignore-scripts
+    - tns usage-reporting disable
+    - tns error-reporting disable
+    - echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+    - curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
+    - sudo apt-get update && sudo apt-get install bazel
+    - sudo apt-get install --only-upgrade bazel
+    - echo y | sdkmanager "ndk-bundle"
+    - echo y | sdkmanager "cmake;3.6.4111459"
+    - echo y | sdkmanager "lldb;3.1"

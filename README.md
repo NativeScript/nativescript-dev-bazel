@@ -4,7 +4,20 @@ Plugin that allows you to build [NativeScript](https://www.nativescript.org/) ap
 
 > NOTE: This is just POC. You should not use this for your production builds.
 
+## Prerequisites
+You need to install the following tooling:
+1. [NativeScript CLI](https://www.npmjs.com/package/nativescript)
+2. [Bazel](https://docs.bazel.build/versions/master/install.html)
+3. [Android Studio](https://developer.android.com/studio/install) with the following SDK components installed:
+  - Android SDK 28 or later
+  - Android SDK Build-Tools 28 or later
+  - Android SDK Platform-Tools 28 or later
+  - Android SDK Tools 26 or later
+  - NDK 19 or later
+4. [Git](https://git-scm.com/downloads)
+
 ## Installation and usage
+
 You can add the plugin to your existing NativeScript applications by executing:
 
 ```
@@ -19,11 +32,6 @@ tns prepare android
 And now you can build it with:
 ```
 bazel build //platforms/android:android
-```
-
-> NOTE: You need Android NDK to be installed in order to make the bazel build work. You can install it by executing:
-```
-echo y | $ANDROID_HOME/tools/bin/sdkmanager "ndk-bundle"
 ```
 
 ## Limitations

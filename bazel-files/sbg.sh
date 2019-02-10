@@ -32,7 +32,7 @@ shift
 cp -p $1 .
 # Silence a warning:
 # Couldn't find the output dir [...] or it wasn't a directory so it will be created!
-mkdir $(cat $1)
+mkdir -p $(cat $1)
 shift
 
 # Uncomment these for some helpful debugging

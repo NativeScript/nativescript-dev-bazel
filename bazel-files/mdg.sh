@@ -17,7 +17,7 @@ shift
 shift
 
 (
-  mkdir $CLASSES_TMP
+  mkdir -p $CLASSES_TMP
   cd $CLASSES_TMP
   $DIR/$JAR xf $DIR/$RESOURCE_JAR
   for j in $(cat $DIR/$DEPS_FILE); do $DIR/$JAR xf $DIR/$j; done
@@ -33,7 +33,7 @@ echo $CLASSES_TMP >> mdg-dependencies-java.txt
 cp -p $1 .
 # Silence a warning:
 # Couldn't find the output dir [...] or it wasn't a directory so it will be created!
-mkdir $(cat $1)
+mkdir -p $(cat $1)
 shift
 
 # Uncomment these for some helpful debugging

@@ -1,3 +1,6 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
 http_archive(
     name = "build_bazel_rules_apple",
     strip_prefix = "rules_apple-0.7.0",
@@ -29,7 +32,7 @@ android_ndk_repository(
 )
 
 # TODO: Read the version of tns-core-modules-widgets from package.json
-new_http_archive(
+http_archive(
     name = "tns_widgets",
     url = "https://registry.yarnpkg.com/tns-core-modules-widgets/-/tns-core-modules-widgets-5.0.1.tgz",
     strip_prefix = "package/platforms",
@@ -42,7 +45,7 @@ aar_import(
 )
 
 # TODO: Read the version of tns-android from package.json
-new_http_archive(
+http_archive(
     name = "tns_android",
     url = "https://registry.yarnpkg.com/tns-android/-/tns-android-5.0.0.tgz",
     strip_prefix = "package/framework",

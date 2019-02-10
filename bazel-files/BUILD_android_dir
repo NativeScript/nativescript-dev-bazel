@@ -28,6 +28,15 @@ sh_binary(
 # i.e. the production dependencies of the project are copied to `<project dir>/platforms/android/app/src/main/assets/app/tns_modules` directory.
 # 5. All files in `tns_modules` are checked and if each of them that is called `<name>.android.<extension>` is renamed to `<name>.<extension>`. Each of them called `<name>.ios.<extension>` is removed.
 # 6. For each of the NativeScript plugins (i.e. dependency of the project that has "nativescript" key in the package.json), the `<project dir>/platforms/android/app/src/main/assets/app/tns_modules/<plugin name>/platforms` dir is removed.
+#
+# NOTE: The other way for preparing the JS code of the application is by using webpack. If it is used, NativeScript CLI executes the following steps:
+# 1. In one of the CLI's hooks, webpack is spawned with arguments (the command below is valid for NativeScript Angular projects):
+# `node '--preserve-symlinks' '<path to project>/node_modules/webpack/bin/webpack.js' '--config=<path to project>/webpack.config.js' '--env.aot' '--env.android' '--env.appPath=src' '--env.appResourcesPath=App_Resources'`
+# 2. Webpack process produces several files, including bundle.js, vendor.js, etc. in `<project dir>/platforms/android/app/src/main/assets/app` dir. They are the one used for building the application.
+# In webpack.config.js there are plugins that will do most of the work described in the other approach.
+#
+# For the second approach we need to split the work that is currently executed by webpack (i.e. check what all the plugins, loaders, etc. are doing in `webpack.config.js`) and translate them to Bazel rules.
+# We can still use Webpack for bundling, but all other tasks can be executed by Bazel, which will allow us to automatically skip the ones which are not changed between builds.
 ASSETS = glob([
         "app/src/main/assets/**",
     ],
@@ -44,6 +53,10 @@ ASSETS = glob([
 )
 
 # TODO: Read the required gmaven artifacts from include.gradle files of the plugin and app.gradle file of the project.
+# i.e. Iterate over all production dependencies of the project (i.e. all the dependencies declared in project's package.json files and ther dependencies and the dependencies of their dependencies, etc.)
+# and check which of them have `nativescript` key in their package.json files. For each of the found dependencies with nativescript key (we call them NativeScript plugins), check the content of `<plugin dir>/platforms/android` directory.
+# In case there's .aar file, add it in the DEPS here (similar to nativescript-widgets below).
+# In case there's include.gradle file, check its content and include required maven libraries.
 DEPS = [
     "@tns_android//:nativescript-optimized-with-inspector",
     "@tns_widgets//:nativescript-widgets",

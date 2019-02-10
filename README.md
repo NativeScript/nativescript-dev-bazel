@@ -8,7 +8,7 @@ Plugin that allows you to build [NativeScript](https://www.nativescript.org/) ap
 You can add the plugin to your existing NativeScript applications by executing:
 
 ```
-npm i --save-dev https://github.com/rosen-vladimirov/nativescript-dev-bazel/tarball/master
+npm i --save-dev https://github.com/NativeScript/nativescript-dev-bazel/tarball/master
 ```
 
 After that you have to prepare the project with:
@@ -32,7 +32,7 @@ echo y | $ANDROID_HOME/tools/bin/sdkmanager "ndk-bundle"
 * You still need to use NativeScript CLI to prepare the project, i.e. you need to execute `tns prepare android` before rebuilding the application.
 
 ## FAQ
-* How to install built application on Android device?
+* `How to install built application on Android device?` </br>
 You can use `bazel` command to directly install the application on emulator (NOTE: the command will also build the app if required):
 ```
 bazel mobile-install //platforms/android:android
@@ -42,15 +42,19 @@ Another way is to use the `adb` located at `$ANDROID_HOME/platform-tools/adb` an
 $ANDROID_HOME/platform-tools/adb install -r bazel-bin/platforms/android/android.apk
 ```
 
-* I'm unable to install the application on Android emulator.
+* `I'm unable to install the application on Android emulator.` </br>
 Probably your emulator is using x86 architecture. the default build operation strips this architecture. In order to use emulator, you have to pass `--fat_apk_cpu=x86` arg to `build`/`mobile-install` bazel commands:
 ```
 bazel mobile-install //platforms/android:android --fat_apk_cpu=x86
 ```
 
+* `How can I use Angular's AOT?`</br>
+Currently the Bazel rules for Angular applications are not included in the Bazel rules for building NativeScript application. So, one way to use AOT is by including the Angular rules in the BUILD.bazel file in `<project dir>/platforms/android`. This is not an easy task, but in case you succeed, feel free to open PR to this repo, so other people will be able to use the rules.</br>
+Another way to use AOT is by preparing your application with the following command: `tns prepare android --bundle --env.aot`. This way NativeScript CLI will use the Angular compiler to prepare the application's code. After that you can build the app with `bazel build //platforms/android:android`
+
 ## Contribution
 You are more than welcome to contribute to this project. Just clone the repo and you are ready to start.
-You can search for `# TODO` in the code for the places where we've identified something needs to be implemented/fixed.
+You can search for `# TODO` in the code for the places where we've identified something needs to be implemented/fixed or just check the logged issues.
 
 ## License
 
